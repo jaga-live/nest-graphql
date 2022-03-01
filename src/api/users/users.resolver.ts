@@ -8,14 +8,22 @@ import { UpdateUserInput } from './dto/update-user.input';
 
 @Resolver(()=> User)
 export class UserResolver{
+  constructor(
+    private readonly userService: UsersService
+  ){}
 
 
+
+  //Create a User
+  @Mutation(() => User)
+  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.userService.create(createUserInput);
+  }
+
+  ////View All users
   @Query(()=> [User])
-  createUser() {
-    return [{
-      _id:"1",
-      name: "jaga"
-    }]    
+  viewAllUser() {
+    return this.userService.findAll()   
   }
 
 }
